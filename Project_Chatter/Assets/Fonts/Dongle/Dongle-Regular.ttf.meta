@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: d6e0fc7ae296b974d9642235c2fd941b
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Dongle
+  fontNames:
+  - Dongle
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 80695322edb7d8047a1ac3fba8c1eb45, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
