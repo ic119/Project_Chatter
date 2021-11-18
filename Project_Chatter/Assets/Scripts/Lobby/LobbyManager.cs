@@ -57,14 +57,14 @@ public class LobbyManager : ServerManager
         {
             roomName = "";
 
-            Hashtable roomTb = new Hashtable();
-            roomTb.Add("RoomName", name);
+            Hashtable roomHT = new Hashtable();
+            roomHT.Add("RoomName", name);
             string[] roomList = new string[1];
             roomList[0] = "RoomName";
 
             RoomOptions roomOp = new RoomOptions();
             roomOp.MaxPlayers = (byte)player;
-            roomOp.CustomRoomProperties = roomTb;
+            roomOp.CustomRoomProperties = roomHT;
             roomOp.CustomRoomPropertiesForLobby = roomList;
             PhotonNetwork.CreateRoom(name, roomOp, null);
 
