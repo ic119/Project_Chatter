@@ -25,6 +25,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField]GameObject createRoom_PopUp;
     [SerializeField]Slider playerCounter_SLIDER;
     [SerializeField]TMP_InputField roomName_INPUT;
+    [SerializeField]TMP_InputField nickName_INPUT;
     [SerializeField]Button create_BTN;
     [SerializeField]Button cancel_BTN;
     [SerializeField]TextMeshProUGUI playerCount_VALUE;
@@ -34,7 +35,7 @@ public class LobbyUI : MonoBehaviour
 
     #region Private Variable
     private const string linking_TEXT = "Connecting To Server...";
-    private const string linked_TEXT = "Connected To Server!";
+    private const string linked_TEXT = "Connected To Server";
     #endregion 
 
     #region LifeCycle
@@ -44,9 +45,11 @@ public class LobbyUI : MonoBehaviour
         Init();
         Create_Init();
     }
+    
 
     private void Start()
     {
+
         if (lobbyManager.isConnected == true)
         {
             Invoke("LinkedServer", 1.5f);
@@ -105,7 +108,11 @@ public class LobbyUI : MonoBehaviour
 
     private void CreateRoom()
     {
-        lobbyManager.Create(roomName_INPUT.text, playerCounter_SLIDER.value);
+        lobbyManager.Create(roomName_INPUT.text, nickName_INPUT.text, playerCounter_SLIDER.value);
+        PhotonNetwork.NickName = nickName_INPUT.text;
+        PlayerPrefs.SetString("User_Name", PhotonNetwork.NickName);
+        Debug.Log(PlayerPrefs.HasKey("User_Name"));
+        
     }
     #endregion
 }

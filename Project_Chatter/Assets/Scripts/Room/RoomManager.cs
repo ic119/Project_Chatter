@@ -10,9 +10,9 @@ using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class RoomManager : ServerManager
 {
-
     #region public variable
     public GameObject[] characters;
+    public bool isMaster = false;
     #endregion
 
     [Header("RoomInfo UI")]
@@ -21,9 +21,9 @@ public class RoomManager : ServerManager
 
     [SerializeField] RoomUI roomUI;
     [SerializeField] Transform RespawnSpot;
-    #region Public variable
-    public bool isMaster = false;
-    #endregion
+
+    private string nick_name;
+
 
     #region LifeCycle
     private void Awake()
@@ -45,6 +45,9 @@ public class RoomManager : ServerManager
     {
         Debug.Log(PhotonNetwork.CurrentRoom.Name + "방 입장 성공");
         PhotonNetwork.AutomaticallySyncScene = true;
+        nick_name = PlayerPrefs.GetString("User_Name");
+        Debug.Log(nick_name);
+        
 
         Hashtable infoHT = PhotonNetwork.CurrentRoom.CustomProperties;
         if (PhotonNetwork.IsMasterClient)
@@ -69,6 +72,7 @@ public class RoomManager : ServerManager
     {
         UpdatePlayerCount();
     }
+
     #endregion
 
     #region Private Method
@@ -88,7 +92,7 @@ public class RoomManager : ServerManager
     {
         if (characters == null)
         {
-            Debug.Log("생성된 캐릭터가 없습니다.");
+            Debug.Log("생성된 캐릭터가 없습니다.");    
         }
         else
         {

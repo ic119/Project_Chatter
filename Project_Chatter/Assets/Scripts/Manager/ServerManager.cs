@@ -44,4 +44,10 @@ public class ServerManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log(cause);
+        ConnectedToServer();
+    }
+
 }

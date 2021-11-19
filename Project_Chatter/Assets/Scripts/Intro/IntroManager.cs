@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Photon.Pun;
 
-public class IntroManager : MonoBehaviour
+
+public class IntroManager : ServerManager
 {
     #region lifecycle
     private void Awake()
@@ -12,6 +14,7 @@ public class IntroManager : MonoBehaviour
     }
     #endregion
 
+    
 
     IEnumerator JoinLobby()
     {
