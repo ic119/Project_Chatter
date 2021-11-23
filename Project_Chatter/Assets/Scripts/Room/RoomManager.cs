@@ -11,7 +11,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class RoomManager : ServerManager
 {
     #region public variable
-    public GameObject[] characters;
+    public GameObject characters;
     public bool isMaster = false;
     #endregion
 
@@ -96,12 +96,18 @@ public class RoomManager : ServerManager
         }
         else
         {
+            GameObject go = PhotonNetwork.Instantiate("Prefabs/Character/Player_4", RespawnSpot.transform.position, Quaternion.identity);
+            /*
             int randNum = Random.Range(0, 5);
             GameObject go = Instantiate(characters[randNum], RespawnSpot.transform.position, Quaternion.identity);
             Debug.Log("캐릭터 생성 완료");
+            */
+            /*
+            GameObject go = Instantiate(characters, RespawnSpot.transform.position, Quaternion.identity);
+            Debug.Log("캐릭터 생성완료");
             PhotonView pv = go.AddComponent<PhotonView>();
-            
             PhotonTransformView pv_tr = go.AddComponent<PhotonTransformView>();
+            */
         }
     }
     #endregion
