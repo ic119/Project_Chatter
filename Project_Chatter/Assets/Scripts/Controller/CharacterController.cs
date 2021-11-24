@@ -10,16 +10,21 @@ public class CharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private Transform player_Tr;
     private Vector3 cur_Pos;
     private Quaternion cur_Rot;
+    private JoyStickController joyStickController;
+
+    private bool IsRun;
+    private bool IsIdle;
     #endregion
+    [SerializeField] Animator player_Anim;
 
-    [SerializeField] float moveSpeed = 5.0f;
 
-    
 
     #region LifeCycle
     private void Awake()
     {
         player_Tr = this.gameObject.GetComponent<Transform>();
+        joyStickController = FindObjectOfType<JoyStickController>();
+        
     }
 
     private void Start()
@@ -33,6 +38,29 @@ public class CharacterController : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+        if(photonView.IsMine)
+        {
+            this.gameObject.transform.position += joyStickController.move_Vec;
+            if (joyStickController.move_Vec == Vector3.zero)
+            {
+                IsIdle = true;
+                IsRun = false;
+                player_Anim.SetBool("IsIdle", true);
+                player_Anim.SetBool("IsRun", false);
+            }
+            else
+            {
+                IsIdle = false;
+                IsRun = true;
+                player_Anim.SetBool("IsIdle", false);
+                player_Anim.SetBool("IsRun", true);
+            }
+            if (joyStickController.value != null)
+            {
+                this.gameObject.transform.rotation = Quaternion.Euler(0.0f, Mathf.Atan2(joyStickController.value.x, joyStickController.value.y) * Mathf.Rad2Deg, 0.0f);
+            }
+        }
+
         if(!photonView.IsMine)
         {
             player_Tr.position = Vector3.Lerp(player_Tr.position, cur_Pos, Time.deltaTime * 5.0f);

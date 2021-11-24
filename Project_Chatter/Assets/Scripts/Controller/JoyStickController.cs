@@ -6,36 +6,38 @@ using UnityEngine.EventSystems;
 
 public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
-    #region Private variable
-    private Vector3 joystick_pos;
-    private Vector3 joystick_vec;
-    private float joystick_radius;
-    private bool isTouch = false;
-    private Transform player_Tr;
-    #endregion
+    [SerializeField] RectTransform joystick_OutLine;
+    [SerializeField] RectTransform joystick_Handle;
+    //[SerializeField] GameObject player;
+    [SerializeField] float move_Speed = 5.0f;
 
-    [SerializeField] Transform joystick_tr;
+    #region Private variable
+    private float radious;
+    private bool isTouch = false;
+    public Vector3 move_Vec;
+    public Vector2 value;
+    private GameObject player;
+    #endregion
 
     #region LifeCycle
     private void Start()
     {
-        player_Tr = GameObject.FindGameObjectWithTag("Player").transform;
-
-        joystick_radius = this.gameObject.GetComponent<RectTransform>().sizeDelta.y * 0.5f;
-        joystick_pos = joystick_tr.transform.position;
-
-        float canvas_size = transform.parent.GetComponent<RectTransform>().localPosition.x;
-        joystick_radius *= canvas_size;
+        radious = joystick_OutLine.rect.width * 0.5f;
     }
 
     private void Update()
     {
         if (isTouch)
         {
-            player_Tr.transform.Translate(Vector3.forward * Time.deltaTime * 5.0f);
+            player.transform.position += move_Vec;
+            if (value != null)
+            {
+                player.transform.rotation = Quaternion.Euler(0.0f, Mathf.Atan2(value.x, value.y) * Mathf.Rad2Deg, 0.0f);
+            }
         }
     }
     #endregion
+
 
     #region IEvent
     /// <summary>
@@ -44,22 +46,14 @@ public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
-        isTouch = true;
-        PointerEventData _eventData = eventData as PointerEventData;
-        Vector3 pos = _eventData.position;
+        value = eventData.position - (Vector2)joystick_OutLine.position;
+        value = Vector2.ClampMagnitude(value, radious);
 
-        joystick_vec = (pos - joystick_pos).normalized;
+        joystick_Handle.localPosition = value;
 
-        float dis = Vector3.Distance(pos, joystick_pos);
-        if ( dis < joystick_radius)
-        {
-            joystick_tr.position = joystick_pos + joystick_vec * dis;
-        }
-        else
-        {
-            joystick_tr.position = joystick_pos + joystick_vec * joystick_radius;
-        }
-        player_Tr.eulerAngles = new Vector3(0, Mathf.Atan2(joystick_vec.x, joystick_vec.y) * Mathf.Rad2Deg, 0);
+        value = value.normalized;
+
+        move_Vec = new Vector3(value.x * move_Speed * Time.deltaTime, 0.0f, value.y * move_Speed * Time.deltaTime);   
     }
 
     /// <summary>
@@ -68,6 +62,7 @@ public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     /// <param name="eventData"></param>
     public void OnPointerDown(PointerEventData eventData)
     {
+        isTouch = true;
         OnDrag(eventData);
     }
 
@@ -77,9 +72,11 @@ public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     /// <param name="eventData"></param>
     public void OnPointerUp(PointerEventData eventData)
     {
-        joystick_tr.position = joystick_pos;
-        joystick_vec = Vector3.zero;
+        joystick_Handle.localPosition = Vector3.zero;
+
         isTouch = false;
+
+        move_Vec = Vector3.zero;
     }
     #endregion
 }

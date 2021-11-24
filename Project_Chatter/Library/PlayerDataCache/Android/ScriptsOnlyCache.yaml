@@ -5,11 +5,14 @@ ScriptsOnlyBuild:
     - CameraController
     - ChangeColor
     - ChangeName
+    - CharacterController
+    - ChatManager
     - ExitGames.Demos.DemoPunVoice.FirstPersonController
     - ExitGames.Demos.DemoPunVoice.Highlighter
     - ExitGames.Demos.DemoPunVoice.OrthographicController
     - ExitGames.Demos.DemoPunVoice.ThirdPersonController
     - IntroManager
+    - JoyStickController
     - LobbyManager
     - LobbyUI
     - PointersController
@@ -17,6 +20,7 @@ ScriptsOnlyBuild:
     - RoomListInfo
     - RoomManager
     - RoomUI
+    - VoiceUI
     PhotonUnityNetworking.Demos.dll:
     - Photon.Pun.Demo.Asteroids.Asteroid
     - Photon.Pun.Demo.Asteroids.Bullet
@@ -27,6 +31,8 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
+    PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.Utilities.dll:
     - Photon.Pun.UtilityScripts.MoveByKeys
     PhotonUnityNetworking.dll:
@@ -36,6 +42,7 @@ ScriptsOnlyBuild:
     - Photon.Pun.PhotonView
     - Photon.Pun.ServerSettings
     PhotonVoice.PUN.dll:
+    - Photon.Voice.PUN.PhotonVoiceNetwork
     - Photon.Voice.PUN.PhotonVoiceView
     PhotonVoice.dll:
     - Photon.Voice.Unity.Recorder
@@ -49,6 +56,14 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshProUGUI
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -61,8 +76,10 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.ContentSizeFitter
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.Mask
+    - UnityEngine.UI.Outline
     - UnityEngine.UI.RectMask2D
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Shadow
@@ -113,8 +130,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
-    - Class: 111
-      Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 11402}
     - Class: 114
@@ -134,67 +149,71 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11858}
     - Class: 114
-      Script: {instanceID: 11870}
+      Script: {instanceID: 11866}
     - Class: 114
-      Script: {instanceID: 11974}
+      Script: {instanceID: 11872}
     - Class: 114
-      Script: {instanceID: 11986}
+      Script: {instanceID: 11976}
     - Class: 114
-      Script: {instanceID: 12164}
+      Script: {instanceID: 11988}
     - Class: 114
-      Script: {instanceID: 12302}
+      Script: {instanceID: 12168}
     - Class: 114
-      Script: {instanceID: 12344}
+      Script: {instanceID: 12306}
     - Class: 114
-      Script: {instanceID: 12466}
+      Script: {instanceID: 12348}
     - Class: 114
-      Script: {instanceID: 12602}
+      Script: {instanceID: 12470}
     - Class: 114
-      Script: {instanceID: 12670}
+      Script: {instanceID: 12606}
     - Class: 114
-      Script: {instanceID: 12684}
+      Script: {instanceID: 12674}
     - Class: 114
-      Script: {instanceID: 12842}
+      Script: {instanceID: 12688}
     - Class: 114
-      Script: {instanceID: 12902}
+      Script: {instanceID: 12846}
     - Class: 114
-      Script: {instanceID: 12984}
+      Script: {instanceID: 12906}
     - Class: 114
-      Script: {instanceID: 13080}
+      Script: {instanceID: 12988}
     - Class: 114
-      Script: {instanceID: 13092}
+      Script: {instanceID: 13084}
     - Class: 114
-      Script: {instanceID: 13138}
+      Script: {instanceID: 13096}
     - Class: 114
-      Script: {instanceID: 13154}
+      Script: {instanceID: 13142}
     - Class: 114
-      Script: {instanceID: 13334}
+      Script: {instanceID: 13158}
     - Class: 114
-      Script: {instanceID: 13356}
+      Script: {instanceID: 13170}
     - Class: 114
-      Script: {instanceID: 13366}
+      Script: {instanceID: 13342}
     - Class: 114
-      Script: {instanceID: 13426}
+      Script: {instanceID: 13364}
     - Class: 114
-      Script: {instanceID: 13522}
+      Script: {instanceID: 13374}
     - Class: 114
-      Script: {instanceID: 13568}
+      Script: {instanceID: 13434}
     - Class: 114
-      Script: {instanceID: 13590}
+      Script: {instanceID: 13530}
     - Class: 114
-      Script: {instanceID: 13670}
+      Script: {instanceID: 13576}
     - Class: 114
-      Script: {instanceID: 13728}
+      Script: {instanceID: 13598}
     - Class: 114
-      Script: {instanceID: 13770}
+      Script: {instanceID: 13678}
     - Class: 114
-      Script: {instanceID: 13904}
+      Script: {instanceID: 13736}
     - Class: 114
-      Script: {instanceID: 13922}
+      Script: {instanceID: 13778}
     - Class: 114
-      Script: {instanceID: 14050}
+      Script: {instanceID: 13912}
     - Class: 114
-      Script: {instanceID: 19252}
+      Script: {instanceID: 13930}
+    - Class: 114
+      Script: {instanceID: 14058}
+    - Class: 114
+      Script: {instanceID: 75970}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -251,11 +270,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11450}
     - Class: 114
-      Script: {instanceID: 12258}
+      Script: {instanceID: 12262}
     - Class: 114
-      Script: {instanceID: 13522}
+      Script: {instanceID: 13530}
     - Class: 114
-      Script: {instanceID: 14020}
+      Script: {instanceID: 14028}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -306,31 +325,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11862}
     - Class: 114
-      Script: {instanceID: 11892}
+      Script: {instanceID: 11894}
     - Class: 114
-      Script: {instanceID: 11896}
+      Script: {instanceID: 11898}
     - Class: 114
-      Script: {instanceID: 12014}
+      Script: {instanceID: 12016}
     - Class: 114
-      Script: {instanceID: 12258}
+      Script: {instanceID: 12262}
     - Class: 114
-      Script: {instanceID: 12530}
+      Script: {instanceID: 12534}
     - Class: 114
-      Script: {instanceID: 12842}
+      Script: {instanceID: 12846}
     - Class: 114
-      Script: {instanceID: 12972}
+      Script: {instanceID: 12976}
     - Class: 114
-      Script: {instanceID: 13138}
+      Script: {instanceID: 13142}
     - Class: 114
-      Script: {instanceID: 13426}
+      Script: {instanceID: 13170}
     - Class: 114
-      Script: {instanceID: 13522}
+      Script: {instanceID: 13434}
     - Class: 114
-      Script: {instanceID: 13718}
+      Script: {instanceID: 13530}
     - Class: 114
-      Script: {instanceID: 14020}
+      Script: {instanceID: 13726}
     - Class: 114
-      Script: {instanceID: 19252}
+      Script: {instanceID: 14028}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -372,34 +391,76 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 90
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
-    - Class: 111
-      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11402}
     - Class: 114
       Script: {instanceID: 11404}
     - Class: 114
+      Script: {instanceID: 11410}
+    - Class: 114
       Script: {instanceID: 11436}
     - Class: 114
-      Script: {instanceID: 11952}
+      Script: {instanceID: 11642}
     - Class: 114
-      Script: {instanceID: 12258}
+      Script: {instanceID: 11674}
     - Class: 114
-      Script: {instanceID: 12842}
+      Script: {instanceID: 11862}
     - Class: 114
-      Script: {instanceID: 12882}
+      Script: {instanceID: 11866}
     - Class: 114
-      Script: {instanceID: 13138}
+      Script: {instanceID: 11954}
     - Class: 114
-      Script: {instanceID: 13392}
+      Script: {instanceID: 12088}
     - Class: 114
-      Script: {instanceID: 13426}
+      Script: {instanceID: 12262}
     - Class: 114
-      Script: {instanceID: 13522}
+      Script: {instanceID: 12534}
     - Class: 114
-      Script: {instanceID: 14020}
+      Script: {instanceID: 12688}
+    - Class: 114
+      Script: {instanceID: 12846}
+    - Class: 114
+      Script: {instanceID: 12886}
+    - Class: 114
+      Script: {instanceID: 12976}
+    - Class: 114
+      Script: {instanceID: 13108}
+    - Class: 114
+      Script: {instanceID: 13142}
+    - Class: 114
+      Script: {instanceID: 13204}
+    - Class: 114
+      Script: {instanceID: 13400}
+    - Class: 114
+      Script: {instanceID: 13434}
+    - Class: 114
+      Script: {instanceID: 13530}
+    - Class: 114
+      Script: {instanceID: 13590}
+    - Class: 114
+      Script: {instanceID: 13598}
+    - Class: 114
+      Script: {instanceID: 13912}
+    - Class: 114
+      Script: {instanceID: 13930}
+    - Class: 114
+      Script: {instanceID: 13936}
+    - Class: 114
+      Script: {instanceID: 14028}
+    - Class: 114
+      Script: {instanceID: 75970}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -747,6 +808,12 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
+      Hash: 8c6b6d5488d044e7705092c13f81d066
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterController
+  - hash:
+      serializedVersion: 2
       Hash: c2a435d94f56ab15b20fed8f446ce58a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -783,7 +850,7 @@ ScriptsOnlyBuild:
     className: CountOfPlayersProperty
   - hash:
       serializedVersion: 2
-      Hash: cac0369df8ff4bac253dfd2fe31a3e83
+      Hash: 1e157c145cf332dce08c34e812d63655
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LobbyUI
@@ -819,7 +886,7 @@ ScriptsOnlyBuild:
     className: PhotonHandler
   - hash:
       serializedVersion: 2
-      Hash: 98f2e0ce4df47c6012206e6266cfb694
+      Hash: 55a69eab87a8c22bf0bd9ac321dde395
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RoomManager
@@ -901,6 +968,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: a25af47771be99e48b6326da1aa0c151
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ChatManager
   - hash:
       serializedVersion: 2
       Hash: 0927e41b46e1bd11671f9b5adda4b832
@@ -1459,6 +1532,18 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: Physics2DRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: 3d82d0f0991e2edaeba6dcf5b6f87d08
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RoomListInfo
+  - hash:
+      serializedVersion: 2
+      Hash: 57da42a4c42f265d6defdcb31b5b09c7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoyStickController
   - hash:
       serializedVersion: 2
       Hash: 11bdd61587db747672b66c52442395d8
@@ -2037,14 +2122,14 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 3d82d0f0991e2edaeba6dcf5b6f87d08
+      Hash: b35709561e77dabb42babb3827b08fb3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: RoomListInfo
+    className: VoiceUI
   platform: 13
   scenePathNames:
   - Assets/Scenes/App.unity
   - Assets/Scenes/Intro.unity
   - Assets/Scenes/Lobby.unity
   - Assets/Scenes/Room.unity
-  playerPath: "C:/Users/inin0/OneDrive/\uBC14\uD0D5 \uD654\uBA74/Chatter_Demo_test3.apk"
+  playerPath: "C:/Users/inin0/OneDrive/\uBC14\uD0D5 \uD654\uBA74/Chatter_Demo_test1.apk"

@@ -96,7 +96,7 @@ public class RoomManager : ServerManager
         }
         else
         {
-            GameObject go = PhotonNetwork.Instantiate("Prefabs/Character/Player_4", RespawnSpot.transform.position, Quaternion.identity);
+            GameObject go = PhotonNetwork.Instantiate("Prefabs/Character/Player", RespawnSpot.transform.position, Quaternion.identity);
             /*
             int randNum = Random.Range(0, 5);
             GameObject go = Instantiate(characters[randNum], RespawnSpot.transform.position, Quaternion.identity);
