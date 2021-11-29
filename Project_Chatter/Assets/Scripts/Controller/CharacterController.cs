@@ -24,7 +24,6 @@ public class CharacterController : MonoBehaviourPunCallbacks, IPunObservable
     {
         player_Tr = this.gameObject.GetComponent<Transform>();
         joyStickController = FindObjectOfType<JoyStickController>();
-        
     }
 
     private void Start()

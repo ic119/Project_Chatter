@@ -8,7 +8,7 @@ public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler
 {
     [SerializeField] RectTransform joystick_OutLine;
     [SerializeField] RectTransform joystick_Handle;
-    //[SerializeField] GameObject player;
+    [SerializeField] GameObject player;
     [SerializeField] float move_Speed = 5.0f;
 
     #region Private variable
@@ -16,7 +16,6 @@ public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     private bool isTouch = false;
     public Vector3 move_Vec;
     public Vector2 value;
-    private GameObject player;
     #endregion
 
     #region LifeCycle

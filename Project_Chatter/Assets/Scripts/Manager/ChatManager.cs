@@ -7,12 +7,14 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Chat;
 using ExitGames.Client.Photon;
+using Photon.Realtime;
 
-public class ChatManager : MonoBehaviour, IChatClientListener
+public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
 {
     [SerializeField] Text chatView_TEXT;
     [SerializeField] InputField chatView_INPUT;
     [SerializeField] Button send_BTN;
+    public PhotonView pv_Chat;
 
     #region Private variable
     private string playerName;
@@ -94,16 +96,44 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     }
     #endregion
 
-    #region IChatClientListener
-    public void OnConnected()
+    #region Pun
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        AddLine("[" + playerName +"]" + "님께서 서버에 접속하였습니다.");
+        pv_Chat.RPC("PlayerState", RpcTarget.All, "<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다.</color>");
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        pv_Chat.RPC("PlayerState", RpcTarget.All, "<color=red>" + otherPlayer.NickName + "님이 퇴장하셨습니다.</color>");
+    }
+
+    public override void OnJoinedRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            pv_Chat.RPC("PlayerState", RpcTarget.All, "<color=green>방장[" + PhotonNetwork.NickName + "]님이 참가하셨습니다.</color>");
+        }
+    }
+    #endregion
+
+    #region RPC
+    [PunRPC]
+    private void PlayerState(string message)
+    {
+        chatView_TEXT.text = message;   
+    }
+    #endregion
+
+    #region IChatClientListener
+    public override void OnConnected()
+    {
+        //AddLine("[" + playerName +"]" + "님께서 서버에 접속하였습니다.");
         chatClient.Subscribe(new string[] { cur_chatChannel }, 10);
     }
 
     public void OnDisconnected()
     {
-        AddLine("[" + playerName + "]" + "님께서 서버에서 나가셨습니다.");
+        //AddLine("[" + playerName + "]" + "님께서 서버에서 나가셨습니다.");
     }
 
     public void OnChatStateChange(ChatState state)
@@ -150,15 +180,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     #endregion
 
 
-
-
-
-
-
-
-
-
-
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
         throw new System.NotImplementedException();
@@ -168,11 +189,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         throw new System.NotImplementedException();
     }
-
-
-
-    
-
     public void OnUserSubscribed(string channel, string user)
     {
         throw new System.NotImplementedException();

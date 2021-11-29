@@ -16,13 +16,18 @@ public class RoomListInfo : MonoBehaviour
 
     #region private variable
     private RoomInfo roomInfo;
+    private LobbyUI lobbyUI;
     #endregion
 
 
     #region LifeCycle
+    private void Awake()
+    {
+        lobbyUI = GameObject.FindObjectOfType<LobbyUI>();
+    }
     private void Start()
     {
-        join_BTN.onClick.AddListener(OnClick_Join);
+        //join_BTN.onClick.AddListener();
     }
 
     #endregion
@@ -40,9 +45,13 @@ public class RoomListInfo : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// join 버튼 클릭 시 닉네임 팝업창 활성화
+    /// </summary>
     public void OnClick_Join()
     {
-        PhotonNetwork.JoinRoom((string)roomInfo.CustomProperties["RoomName"]);
+        lobbyUI.enterNickName_PopUp.SetActive(true);
+        //PhotonNetwork.JoinRoom((string)roomInfo.CustomProperties["RoomName"]);
     }
     #endregion
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -30,12 +31,18 @@ public class LobbyUI : MonoBehaviour
     [SerializeField]Button cancel_BTN;
     [SerializeField]TextMeshProUGUI playerCount_VALUE;
 
-
+    [Header("Enter NickName UI")]
+    public GameObject enterNickName_PopUp;
+    [SerializeField]Button nickName_Confirm_BTN;
+    [SerializeField]Button nickName_Cancle_BTN;
+    [SerializeField]TMP_InputField enterNickName_INPUT;
+    
     [SerializeField]LobbyManager lobbyManager;
 
     #region Private Variable
     private const string linking_TEXT = "Connecting To Server...";
     private const string linked_TEXT = "Connected To Server";
+    private RoomInfo roomInfo;
     #endregion 
 
     #region LifeCycle
@@ -58,8 +65,9 @@ public class LobbyUI : MonoBehaviour
         Exit_BTN.onClick.AddListener(lobbyManager.Exit_BTN);
         createRoom_BTN.onClick.AddListener(PopUp_On);
         create_BTN.onClick.AddListener(CreateRoom);
+        quick_BTN.onClick.AddListener(QuickJoinRoom);
         cancel_BTN.onClick.AddListener(PopUp_Off);
-
+        nickName_Confirm_BTN.onClick.AddListener(EnterRoom);
         playerCounter_SLIDER.onValueChanged.AddListener(delegate { SetPlayerCount(); });
     }
     #endregion
@@ -91,13 +99,16 @@ public class LobbyUI : MonoBehaviour
     {
         createRoom_PopUp.SetActive(false);
     }
+
     /// <summary>
-    /// 방 생성 팝업창에서 slider의 default값을 2로 설정
+    /// 방 생성 팝업창 초기화
     /// </summary>
     private void Create_Init()
     {
         playerCounter_SLIDER.value = 2;
         playerCount_VALUE.text = playerCounter_SLIDER.value.ToString();
+        roomName_INPUT.text = "";
+        nickName_INPUT.text = "";
         lobbyManager.CreateInit(playerCounter_SLIDER.value);
     }
 
@@ -106,13 +117,31 @@ public class LobbyUI : MonoBehaviour
         playerCount_VALUE.text = playerCounter_SLIDER.value.ToString();
     }
 
+    /// <summary>
+    /// createRoom_PopUp에서 닉네임 입력 후 PlayerPrefs로 저장 처리
+    /// </summary>
     private void CreateRoom()
     {
         lobbyManager.Create(roomName_INPUT.text, nickName_INPUT.text, playerCounter_SLIDER.value);
-        PhotonNetwork.NickName = nickName_INPUT.text;
+        PhotonNetwork.LocalPlayer.NickName = nickName_INPUT.text;
         PlayerPrefs.SetString("User_Name", PhotonNetwork.NickName);
         Debug.Log(PlayerPrefs.HasKey("User_Name"));
-        
+    }
+
+    /// <summary>
+    /// enterRoom_PopUp에서 닉네임 입력 후 PlayerPrefs로 저장 처리
+    /// </summary>
+    private void EnterRoom()
+    {
+        PhotonNetwork.LocalPlayer.NickName = enterNickName_INPUT.text;
+        PlayerPrefs.SetString("User_Name", PhotonNetwork.NickName);
+        Debug.Log(PlayerPrefs.HasKey("User_Name"));
+    }
+
+    private void QuickJoinRoom()
+    {
+        createRoom_PopUp.SetActive(true);
+        lobbyManager.Quick_JoinRoom(roomName_INPUT.text, nickName_INPUT.text, playerCounter_SLIDER.value);
     }
     #endregion
 }

@@ -6,43 +6,66 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviour
 {
-    #region Singleton
-    private static CameraController instance;
-    public static CameraController Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new CameraController();
-            }
-            return instance;
-        }
-    }
-    #endregion
+    [SerializeField] Camera thirdCam;
+    [SerializeField] Camera firstCam;
 
     #region Public variable
-    public Vector3 off_set;
     public Transform cam_target;
+    public enum Cam_State
+    {
+        Third_Cam,
+        First_Cam
+    }
+
+    public Cam_State eCamera;
+    #endregion
+
+    #region Private variable
+    private RoomUI roomUI;
     #endregion
 
 
     #region LifeCycle
-
-    private void Start()
+    private void Awake()
     {
-        SetCamera();
+        firstCam.enabled = false;
+        thirdCam.enabled = true;
+        roomUI = GameObject.FindObjectOfType<RoomUI>();
     }
     private void Update()
     {
-        gameObject.transform.position = cam_target.position + off_set;
+        switch(roomUI.click_btn)
+        {
+            case (int)Cam_State.Third_Cam:
+                {
+                    this.gameObject.transform.position = GameObject.FindWithTag("ThirdCam").transform.position;
+                    firstCam.enabled = false;
+                    thirdCam.enabled = true;
+                    break;
+                }
+
+            case (int)Cam_State.First_Cam:
+                {
+                    this.gameObject.transform.position = GameObject.FindWithTag("FirstCam").transform.position;
+                    thirdCam.enabled = false;
+                    firstCam.enabled = true;
+                    break;
+                }
+        }
+        //this.gameObject.transform.position = GameObject.FindWithTag("ThirdCam").transform.position;
     }
     #endregion
 
     #region Public Method
-    public void SetCamera()
+    public void SetCamera_First()
     {
-        this.gameObject.transform.position = new Vector3(-0.2f, 5.5f, -4.5f);
+
+        this.gameObject.transform.position = GameObject.FindWithTag("FirstCam").transform.position;
+    }
+
+    public void SetCamera_Third()
+    {
+        this.gameObject.transform.position = GameObject.FindWithTag("ThirdCam").transform.position;
     }
     #endregion
 }

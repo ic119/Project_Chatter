@@ -91,6 +91,42 @@ public class LobbyManager : ServerManager
         }
     }
 
+    public void Quick_JoinRoom(string roomName, string nickName, float player)
+    {
+        string room_name = roomName;
+        string nick_name = nickName; if (string.IsNullOrEmpty(roomName) || string.IsNullOrEmpty(nickName))
+        {
+            return;
+        }
+
+        if (string.IsNullOrEmpty(room_name) || string.IsNullOrEmpty(nick_name))
+        {
+            roomName = "";
+            nickName = "";
+        }
+        else
+        {
+            roomName = "";
+            nickName = "";
+
+            Hashtable roomHT = new Hashtable();
+            roomHT.Add("RoomName", room_name);
+            string[] roomList = new string[1];
+            roomList[0] = "RoomName";
+
+            RoomOptions roomOp = new RoomOptions();
+            roomOp.MaxPlayers = (byte)player;
+            roomOp.CustomRoomProperties = roomHT;
+            roomOp.CustomRoomPropertiesForLobby = roomList;
+            //PhotonNetwork.JoinRandomOrCreateRoom(null, null, null, null, null, room_name, roomOp, null); ;
+            PhotonNetwork.JoinRandomOrCreateRoom(null, 0, MatchmakingMode.FillRoom, null, null, room_name, roomOp, null);
+
+
+            Debug.Log(room_name + "방 생성");
+            AppManager.Instance.ChangeScene(AppManager.eSceneState.Room);
+        }
+    }
+
     /// <summary>
     /// 애플리케이션 종료
     /// </summary>
