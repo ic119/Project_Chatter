@@ -10,15 +10,29 @@ using Photon.Realtime;
 
 public class RoomListInfo : MonoBehaviour
 {
+    #region Singleton
+    private static RoomListInfo instance;
+    public static RoomListInfo Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = new RoomListInfo();
+            }
+            return instance;
+        }
+    }
+    #endregion
+
     [SerializeField] TextMeshProUGUI roomName_TEXT;
     [SerializeField] TextMeshProUGUI participantCount_TEXT;
     [SerializeField] Button join_BTN;
 
     #region private variable
-    private RoomInfo roomInfo;
+    public RoomInfo roomInfo;
     private LobbyUI lobbyUI;
     #endregion
-
 
     #region LifeCycle
     private void Awake()
@@ -27,7 +41,7 @@ public class RoomListInfo : MonoBehaviour
     }
     private void Start()
     {
-        //join_BTN.onClick.AddListener();
+        join_BTN.onClick.AddListener(OnClick_Join);
     }
 
     #endregion
@@ -53,5 +67,6 @@ public class RoomListInfo : MonoBehaviour
         lobbyUI.enterNickName_PopUp.SetActive(true);
         //PhotonNetwork.JoinRoom((string)roomInfo.CustomProperties["RoomName"]);
     }
+
     #endregion
 }

@@ -31,6 +31,8 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
+    PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.Utilities.dll:
     - Photon.Pun.UtilityScripts.MoveByKeys
     PhotonUnityNetworking.dll:
@@ -240,6 +242,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 225
       Script: {instanceID: 0}
+    - Class: 258
+      Script: {instanceID: 0}
     Assets/Scenes/Intro.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -298,12 +302,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11402}
     - Class: 114
       Script: {instanceID: 11404}
     - Class: 114
@@ -382,8 +386,6 @@ ScriptsOnlyBuild:
     - Class: 65
       Script: {instanceID: 0}
     - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
       Script: {instanceID: 0}
     - Class: 82
       Script: {instanceID: 0}
@@ -854,7 +856,7 @@ ScriptsOnlyBuild:
     className: CountOfPlayersProperty
   - hash:
       serializedVersion: 2
-      Hash: 601e3c9442755f9a555a8634a8ebb495
+      Hash: 379682d07d5bbff7bd02c33d764fd496
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LobbyUI
@@ -1550,7 +1552,7 @@ ScriptsOnlyBuild:
     className: RoomListInfo
   - hash:
       serializedVersion: 2
-      Hash: e81ef77bc04b5099216085b96ba96e76
+      Hash: 57da42a4c42f265d6defdcb31b5b09c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: JoyStickController
@@ -1658,7 +1660,7 @@ ScriptsOnlyBuild:
     className: Asteroid
   - hash:
       serializedVersion: 2
-      Hash: 65303ccff23c90c43448317022eba498
+      Hash: 476899941a769c13c5dd2194d91e8e20
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraController
@@ -2136,4 +2138,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Intro.unity
   - Assets/Scenes/Lobby.unity
   - Assets/Scenes/Room.unity
-  playerPath: "C:/Users/inin0/OneDrive/\uBC14\uD0D5 \uD654\uBA74/Chatter_Demo_test1.apk"
+  playerPath: "C:/Users/inin0/OneDrive/\uBC14\uD0D5 \uD654\uBA74/Chatter_Demo_test03.apk"

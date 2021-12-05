@@ -4,68 +4,88 @@ using UnityEngine;
 
 using Photon.Pun;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviourPun
 {
-    [SerializeField] Camera thirdCam;
-    [SerializeField] Camera firstCam;
+    #region Singleton
+    private static CameraController instance;
+    public static CameraController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new CameraController();
+            }
+            return instance;
+        }
+    }
+    #endregion
 
     #region Public variable
     public Transform cam_target;
-    public enum Cam_State
-    {
-        Third_Cam,
-        First_Cam
-    }
-
-    public Cam_State eCamera;
     #endregion
 
     #region Private variable
     private RoomUI roomUI;
+
+    [SerializeField] Camera firstCam;
+    [SerializeField] Camera thirdCam;
+    private PhotonView pv;
+    //[SerializeField] Vector3 cam_offSet;
     #endregion
 
 
     #region LifeCycle
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
         firstCam.enabled = false;
-        thirdCam.enabled = true;
+        thirdCam.enabled = false;
         roomUI = GameObject.FindObjectOfType<RoomUI>();
+        pv = this.gameObject.GetComponent<PhotonView>();
     }
+
+    private void Start()
+    {
+        if (!pv.IsMine)
+        {
+            return;
+        }
+        else if (pv.IsMine)
+        {
+            SetCamera_Third();
+        }
+    }
+
     private void Update()
     {
-        switch(roomUI.click_btn)
-        {
-            case (int)Cam_State.Third_Cam:
-                {
-                    this.gameObject.transform.position = GameObject.FindWithTag("ThirdCam").transform.position;
-                    firstCam.enabled = false;
-                    thirdCam.enabled = true;
-                    break;
-                }
-
-            case (int)Cam_State.First_Cam:
-                {
-                    this.gameObject.transform.position = GameObject.FindWithTag("FirstCam").transform.position;
-                    thirdCam.enabled = false;
-                    firstCam.enabled = true;
-                    break;
-                }
-        }
-        //this.gameObject.transform.position = GameObject.FindWithTag("ThirdCam").transform.position;
+        this.gameObject.transform.position = cam_target.position;
     }
     #endregion
-
     #region Public Method
+    
+    /// <summary>
+    /// FPV 카메라 연결
+    /// </summary>
     public void SetCamera_First()
     {
-
-        this.gameObject.transform.position = GameObject.FindWithTag("FirstCam").transform.position;
+        //this.gameObject.transform.position = GameObject.FindWithTag("FirstCam").transform.position;
+        firstCam.enabled = true;
+        thirdCam.enabled = false;
     }
-
+    /// <summary>
+    /// TPV 카메라 연결
+    /// </summary>
     public void SetCamera_Third()
     {
-        this.gameObject.transform.position = GameObject.FindWithTag("ThirdCam").transform.position;
+        //this.gameObject.transform.position = GameObject.FindWithTag("MainCamera").transform.position;
+        thirdCam.enabled = true;
+        firstCam.enabled = false;
     }
+    
     #endregion
 }

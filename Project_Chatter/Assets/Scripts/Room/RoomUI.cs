@@ -29,6 +29,7 @@ public class RoomUI : UIManager
     public bool isFPV = false;
     public int click_btn = 0;
 
+
     #region LifeCycle
     public override void Awake()
     {
@@ -44,26 +45,27 @@ public class RoomUI : UIManager
 
     #region Public Method
     public void Change_Cam()
-    {
-        if (click_btn == 0)
+    { 
+        if (isFPV == false)
         {
+            CameraController.Instance.SetCamera_Third();
             cam_TEXT.text = string.Format("TPV");
             cam_BTN.image.sprite = toggle_LEFT;
-            click_btn = 1;
-            Debug.Log(click_btn);
+            isFPV = true;
+            Debug.Log(isFPV);
         }
-        else if (click_btn == 1)
+        else if (isFPV == true)
         {
+            CameraController.Instance.SetCamera_First();
             cam_TEXT.text = string.Format("FPV");
             cam_BTN.image.sprite = toggle_RIGHT;
-            click_btn = 0;
-            Debug.Log(click_btn);
+            isFPV = false;
+            Debug.Log(isFPV);
         }
     }
 
     public override void Exit_BTN()
     {
-        PhotonNetwork.JoinLobby();
         PhotonNetwork.LeaveRoom();
         Debug.Log(PhotonNetwork.CurrentRoom.Name + "Room => Lobby 이동");
         AppManager.Instance.ChangeScene(AppManager.eSceneState.Lobby);

@@ -23,7 +23,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField]TextMeshProUGUI serverLink_TEXT;
 
     [Header("Create Room UI")]
-    [SerializeField]GameObject createRoom_PopUp;
+    public GameObject createRoom_PopUp;
     [SerializeField]Slider playerCounter_SLIDER;
     [SerializeField]TMP_InputField roomName_INPUT;
     [SerializeField]TMP_InputField nickName_INPUT;
@@ -36,13 +36,15 @@ public class LobbyUI : MonoBehaviour
     [SerializeField]Button nickName_Confirm_BTN;
     [SerializeField]Button nickName_Cancle_BTN;
     [SerializeField]TMP_InputField enterNickName_INPUT;
-    
+
+    public GameObject quickState_PopUp;
     [SerializeField]LobbyManager lobbyManager;
+
 
     #region Private Variable
     private const string linking_TEXT = "Connecting To Server...";
     private const string linked_TEXT = "Connected To Server";
-    private RoomInfo roomInfo;
+    private RoomInfo _roominfo;
     #endregion 
 
     #region LifeCycle
@@ -68,6 +70,7 @@ public class LobbyUI : MonoBehaviour
         quick_BTN.onClick.AddListener(QuickJoinRoom);
         cancel_BTN.onClick.AddListener(PopUp_Off);
         nickName_Confirm_BTN.onClick.AddListener(EnterRoom);
+        nickName_Cancle_BTN.onClick.AddListener(Cancel_EnterRoom);
         playerCounter_SLIDER.onValueChanged.AddListener(delegate { SetPlayerCount(); });
     }
     #endregion
@@ -123,7 +126,7 @@ public class LobbyUI : MonoBehaviour
     private void CreateRoom()
     {
         lobbyManager.Create(roomName_INPUT.text, nickName_INPUT.text, playerCounter_SLIDER.value);
-        PhotonNetwork.LocalPlayer.NickName = nickName_INPUT.text;
+        PhotonNetwork.NickName = nickName_INPUT.text;
         PlayerPrefs.SetString("User_Name", PhotonNetwork.NickName);
         Debug.Log(PlayerPrefs.HasKey("User_Name"));
     }
@@ -133,15 +136,40 @@ public class LobbyUI : MonoBehaviour
     /// </summary>
     private void EnterRoom()
     {
-        PhotonNetwork.LocalPlayer.NickName = enterNickName_INPUT.text;
+        _roominfo = lobbyManager.roomInfo;
+        string room_Name = (string)_roominfo.CustomProperties["RoomName"];
+        PhotonNetwork.NickName = enterNickName_INPUT.text;
         PlayerPrefs.SetString("User_Name", PhotonNetwork.NickName);
-        Debug.Log(PlayerPrefs.HasKey("User_Name"));
+        PhotonNetwork.JoinRoom(room_Name);
+        AppManager.Instance.ChangeScene(AppManager.eSceneState.Room);
+    }
+
+    private void Cancel_EnterRoom()
+    {
+        enterNickName_INPUT.text = "";
+        enterNickName_PopUp.SetActive(false);
     }
 
     private void QuickJoinRoom()
     {
-        createRoom_PopUp.SetActive(true);
-        lobbyManager.Quick_JoinRoom(roomName_INPUT.text, nickName_INPUT.text, playerCounter_SLIDER.value);
+        lobbyManager.Quick_JoinRoom();
+        //createRoom_PopUp.SetActive(true);
+        //lobbyManager.Quick_JoinRoom(roomName_INPUT.text, nickName_INPUT.text, playerCounter_SLIDER.value);
     }
+
+    private void Close_QuickStatePopUp()
+    {
+        quickState_PopUp.SetActive(false);
+    }
+    #endregion
+
+    #region Public Method
+    public void Open_QuickStatePopUp()
+    {
+        quickState_PopUp.SetActive(true);
+        Invoke("Close_QuickStatePopUp", 2.0f);
+        Invoke("PopUp_On", 2.0f);
+    }
+
     #endregion
 }

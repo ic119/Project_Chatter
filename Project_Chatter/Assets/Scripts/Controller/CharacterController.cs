@@ -4,41 +4,55 @@ using UnityEngine;
 
 using Photon.Pun;
 
+
+[RequireComponent(typeof(PhotonView))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
 public class CharacterController : MonoBehaviourPunCallbacks, IPunObservable
 {
+
     #region Private variable
     private Transform player_Tr;
     private Vector3 cur_Pos;
     private Quaternion cur_Rot;
     private JoyStickController joyStickController;
+    private PhotonView pv;
 
     private bool IsRun;
     private bool IsIdle;
     #endregion
     [SerializeField] Animator player_Anim;
 
-
-
     #region LifeCycle
     private void Awake()
     {
+        pv = this.gameObject.GetComponent<PhotonView>();
         player_Tr = this.gameObject.GetComponent<Transform>();
         joyStickController = FindObjectOfType<JoyStickController>();
+        player_Tr = this.transform;
     }
 
     private void Start()
     {
+        /*
         player_Tr = this.transform;
-        if (photonView.IsMine)
+        if(pv.IsMine)
         {
-            Camera.main.GetComponent<CameraController>().cam_target = player_Tr;
+            CameraController.Instance.cam_target = player_Tr;
         }
+        */
     }
 
     private void Update()
     {
-        if(photonView.IsMine)
+        if(!pv.IsMine)
         {
+            return;
+        }
+        else if (pv.IsMine)
+        {
+            //cam_target = player_Tr;
+            CameraController.Instance.cam_target = player_Tr;
             this.gameObject.transform.position += joyStickController.move_Vec;
             if (joyStickController.move_Vec == Vector3.zero)
             {
@@ -60,7 +74,7 @@ public class CharacterController : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
-        if(!photonView.IsMine)
+        if(!pv.IsMine)
         {
             player_Tr.position = Vector3.Lerp(player_Tr.position, cur_Pos, Time.deltaTime * 5.0f);
             player_Tr.rotation = Quaternion.Slerp(player_Tr.rotation, cur_Rot, Time.deltaTime * 5.0f);

@@ -15,16 +15,18 @@ public class LobbyManager : ServerManager
 
     #region Public Variable
     public bool isConnected = false;
+    public RoomInfo roomInfo;
     public GameObject roomList_prefab;
     #endregion
 
     #region Private Variable
-    private RoomInfo roomInfo;
+    private LobbyUI lobbyUI;
     #endregion
 
     #region LifeCycle
     private void Awake()
     {
+        lobbyUI = GameObject.FindObjectOfType<LobbyUI>();
         PhotonNetwork.AutomaticallySyncScene = true;
 
         if(!PhotonNetwork.IsConnected)
@@ -85,14 +87,15 @@ public class LobbyManager : ServerManager
             roomOp.CustomRoomPropertiesForLobby = roomList;
             PhotonNetwork.CreateRoom(room_name, roomOp, null);
 
-
             Debug.Log(room_name + "방 생성");
             AppManager.Instance.ChangeScene(AppManager.eSceneState.Room);
         }
     }
 
-    public void Quick_JoinRoom(string roomName, string nickName, float player)
+    public void Quick_JoinRoom()
     {
+        PhotonNetwork.JoinRandomRoom();
+        /*
         string room_name = roomName;
         string nick_name = nickName; if (string.IsNullOrEmpty(roomName) || string.IsNullOrEmpty(nickName))
         {
@@ -125,6 +128,7 @@ public class LobbyManager : ServerManager
             Debug.Log(room_name + "방 생성");
             AppManager.Instance.ChangeScene(AppManager.eSceneState.Room);
         }
+        */
     }
 
     /// <summary>
@@ -150,6 +154,11 @@ public class LobbyManager : ServerManager
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        foreach(Transform tr in listContent_TR)
+        {
+            Destroy(tr.gameObject);
+        }
+
         for (int i = 0; i < roomList.Count; i++)
         {
             roomInfo = roomList[i];
@@ -160,6 +169,13 @@ public class LobbyManager : ServerManager
             Instantiate(roomList_prefab, listContent_TR).GetComponent<RoomListInfo>().Set_RoomInfo(roomList[i]);
         }
     }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        lobbyUI.Open_QuickStatePopUp();
+        //lobbyUI.createRoom_PopUp.SetActive(true);
+    }
+
     #endregion
 
 }

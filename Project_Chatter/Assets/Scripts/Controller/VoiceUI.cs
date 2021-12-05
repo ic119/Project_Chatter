@@ -31,37 +31,20 @@ public class VoiceUI : MonoBehaviour
 
     private void Start()
     {
+        playerName_TEXT.text = pv.Owner.NickName;
+
+        /*
         if(pv.IsMine)
         {
-            //playerName_TEXT.text = PlayerPrefs.GetString("User_Name");
-            playerName_TEXT.text = PhotonNetwork.LocalPlayer.NickName;
+            playerName_TEXT.text = PlayerPrefs.GetString("User_Name");
         }
+        */
     }
 
     private void Update()
     {
-        if (pv_voice.IsSpeaking)
-        {
-            speaking_IMG.enabled = true;
-        }
-        else
-        {
-            speaking_IMG.enabled = false;
-        }
-
-        if(pv_voice.IsRecording)
-        {
-            recording_IMG.enabled = true;
-        }
-        else
-        {
-            recording_IMG.enabled = false;
-        }
-
-        /*
         speaking_IMG.enabled = pv_voice.IsSpeaking;
         recording_IMG.enabled = pv_voice.IsRecording;
-        */
     }
     #endregion
 }

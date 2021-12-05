@@ -4,21 +4,32 @@ using UnityEngine;
 
 using UnityEngine.EventSystems;
 
+
+
 public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
     [SerializeField] RectTransform joystick_OutLine;
     [SerializeField] RectTransform joystick_Handle;
-    [SerializeField] GameObject player;
-    [SerializeField] float move_Speed = 5.0f;
+    //[SerializeField] GameObject player;
+    [SerializeField] float move_Speed = 3.5f;
 
     #region Private variable
     private float radious;
     private bool isTouch = false;
+    private GameObject player;
+    #endregion
+
+    #region Public variable
     public Vector3 move_Vec;
     public Vector2 value;
     #endregion
 
     #region LifeCycle
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
+
     private void Start()
     {
         radious = joystick_OutLine.rect.width * 0.5f;

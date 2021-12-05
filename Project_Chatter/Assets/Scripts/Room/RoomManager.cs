@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine.UI;
 using TMPro;
 
 using Photon.Pun;
@@ -97,17 +96,6 @@ public class RoomManager : ServerManager
         else
         {
             GameObject go = PhotonNetwork.Instantiate("Prefabs/Character/Player", RespawnSpot.transform.position, Quaternion.identity);
-            /*
-            int randNum = Random.Range(0, 5);
-            GameObject go = Instantiate(characters[randNum], RespawnSpot.transform.position, Quaternion.identity);
-            Debug.Log("캐릭터 생성 완료");
-            */
-            /*
-            GameObject go = Instantiate(characters, RespawnSpot.transform.position, Quaternion.identity);
-            Debug.Log("캐릭터 생성완료");
-            PhotonView pv = go.AddComponent<PhotonView>();
-            PhotonTransformView pv_tr = go.AddComponent<PhotonTransformView>();
-            */
         }
     }
     #endregion
