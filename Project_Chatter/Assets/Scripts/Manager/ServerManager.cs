@@ -30,7 +30,6 @@ public class ServerManager : MonoBehaviourPunCallbacks
             instance = this;
         }
     }
-
     #endregion
 
     #region public Method
@@ -49,5 +48,4 @@ public class ServerManager : MonoBehaviourPunCallbacks
         Debug.Log(cause);
         ConnectedToServer();
     }
-
 }

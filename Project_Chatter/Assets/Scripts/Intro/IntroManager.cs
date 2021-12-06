@@ -14,13 +14,10 @@ public class IntroManager : ServerManager
     }
     #endregion
 
-    
-
     IEnumerator JoinLobby()
     {
         yield return new WaitForSeconds(1.0f);
         AppManager.Instance.ChangeScene(AppManager.eSceneState.Lobby);
         Debug.Log("로비로 이동합니다");
     }
-
 }

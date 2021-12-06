@@ -4,13 +4,10 @@ using UnityEngine;
 
 using UnityEngine.EventSystems;
 
-
-
 public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
     [SerializeField] RectTransform joystick_OutLine;
     [SerializeField] RectTransform joystick_Handle;
-    //[SerializeField] GameObject player;
     [SerializeField] float move_Speed = 3.5f;
 
     #region Private variable
@@ -47,7 +44,6 @@ public class JoyStickController : MonoBehaviour, IDragHandler, IPointerUpHandler
         }
     }
     #endregion
-
 
     #region IEvent
     /// <summary>

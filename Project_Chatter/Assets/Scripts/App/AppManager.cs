@@ -51,12 +51,6 @@ public class AppManager : Singleton<AppManager>
                             ChangeScene(eSceneState.Lobby);
                         };
                     }
-                    /**
-                    SceneManager.LoadSceneAsync(eSceneState.Intro.ToString()).completed += (oper) =>
-                    {
-                        ChangeScene(eSceneState.Lobby);
-                    };
-                    **/
                 }
                 break;
             case eSceneState.Lobby:

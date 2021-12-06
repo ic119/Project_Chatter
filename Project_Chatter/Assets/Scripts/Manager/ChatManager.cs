@@ -28,7 +28,10 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
     {
         scrollRect = GameObject.FindObjectOfType<ScrollRect>();
         Application.runInBackground = true;
+        // 앱이 백그라운드 상태일 때 실행되도록 설정처리
+
         playerName = PlayerPrefs.GetString("User_Name");
+        // PlayerPrefs에 저장한 User_Name의 Key의 value값을 가져온다
 
         cur_chatChannel = "001";
         chatClient = new ChatClient(this);
@@ -36,11 +39,13 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
         chatClient.UseBackgroundWorkerForSending = true;
         chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0.0",
                             new Photon.Chat.AuthenticationValues(playerName));
+        // player의 이름과 포톤네트워크의 ChatID, 버전을 통해 연결 시도
     }
 
     private void Update()
     {
         chatClient.Service();
+        // Service()는 꼭 Update에 실행주어야 Chat기능을 사용할 수 있다.
         OnClick_Send();
     }
     #endregion
@@ -54,7 +59,6 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
         chatView_TEXT.text += _chatLine + "\n";
     }
 
-
     public void OnApplicationQuit()
     {
         if (chatClient != null)
@@ -62,7 +66,7 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
             chatClient.Disconnect();
         }
     }
-    
+
     /// <summary>
     /// 채팅에 보낼 내용을 입력 처리
     /// </summary>
@@ -88,7 +92,7 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
     {
         SendChat(chatView_INPUT.text);
         chatView_INPUT.text = "";
-    }
+    }   
 
     public void OnClick_Send()
     {
@@ -96,7 +100,7 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
     }
     #endregion
 
-    #region Pun
+    #region Pun Method
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         pv_Chat.RPC("PlayerState", RpcTarget.All, "<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다.</color>");
@@ -117,6 +121,10 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
     #endregion
 
     #region RPC
+    /// <summary>
+    /// RPC를 통해 방에 존재하는 player의 채팅창에 player의 상태를 전달
+    /// </summary>
+    /// <param name="message"></param>
     [PunRPC]
     private void PlayerState(string message)
     {
@@ -127,13 +135,12 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
     #region IChatClientListener
     public override void OnConnected()
     {
-        //AddLine("[" + playerName +"]" + "님께서 서버에 접속하였습니다.");
         chatClient.Subscribe(new string[] { cur_chatChannel }, 10);
     }
 
     public void OnDisconnected()
     {
-        //AddLine("[" + playerName + "]" + "님께서 서버에서 나가셨습니다.");
+
     }
 
     public void OnChatStateChange(ChatState state)
@@ -178,8 +185,6 @@ public class ChatManager : MonoBehaviourPunCallbacks, IChatClientListener
         }
     }
     #endregion
-
-
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
         throw new System.NotImplementedException();

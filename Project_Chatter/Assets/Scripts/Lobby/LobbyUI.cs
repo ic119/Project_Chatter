@@ -54,7 +54,6 @@ public class LobbyUI : MonoBehaviour
         Init();
         Create_Init();
     }
-    
 
     private void Start()
     {
@@ -62,6 +61,7 @@ public class LobbyUI : MonoBehaviour
         if (lobbyManager.isConnected == true)
         {
             Invoke("LinkedServer", 1.5f);
+            // 1.5초 후 LinkedServer메서드 실행
         }
 
         Exit_BTN.onClick.AddListener(lobbyManager.Exit_BTN);
@@ -115,6 +115,9 @@ public class LobbyUI : MonoBehaviour
         lobbyManager.CreateInit(playerCounter_SLIDER.value);
     }
 
+    /// <summary>
+    /// 참가자 수를 조절하는 Slider의 value값을 text에 띄우도록 처리
+    /// </summary>
     private void SetPlayerCount()
     {
         playerCount_VALUE.text = playerCounter_SLIDER.value.ToString();
@@ -153,8 +156,6 @@ public class LobbyUI : MonoBehaviour
     private void QuickJoinRoom()
     {
         lobbyManager.Quick_JoinRoom();
-        //createRoom_PopUp.SetActive(true);
-        //lobbyManager.Quick_JoinRoom(roomName_INPUT.text, nickName_INPUT.text, playerCounter_SLIDER.value);
     }
 
     private void Close_QuickStatePopUp()
@@ -170,6 +171,5 @@ public class LobbyUI : MonoBehaviour
         Invoke("Close_QuickStatePopUp", 2.0f);
         Invoke("PopUp_On", 2.0f);
     }
-
     #endregion
 }

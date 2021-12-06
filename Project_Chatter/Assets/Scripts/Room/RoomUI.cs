@@ -26,16 +26,16 @@ public class RoomUI : UIManager
 
     [SerializeField] RoomManager roomManager;
 
+    #region public variable
     public bool isFPV = false;
     public int click_btn = 0;
-
+    #endregion
 
     #region LifeCycle
     public override void Awake()
     {
         roomManager = GameObject.FindObjectOfType<RoomManager>();
     }
-
     private void Start()
     {
         exit_BTN.onClick.AddListener(Exit_BTN);
@@ -44,6 +44,9 @@ public class RoomUI : UIManager
     #endregion
 
     #region Public Method
+    /// <summary>
+    /// FPV / TPV 시점을 전환처리하는 메서드
+    /// </summary>
     public void Change_Cam()
     { 
         if (isFPV == false)
@@ -52,7 +55,8 @@ public class RoomUI : UIManager
             cam_TEXT.text = string.Format("TPV");
             cam_BTN.image.sprite = toggle_LEFT;
             isFPV = true;
-            Debug.Log(isFPV);
+            // 1인칭이 아닐 경우 시점을 3인칭으로 바꾸고 버튼에 대한 이미지를 변경
+            // isFPV : 카메라의 시점을 판단하는 bool형식 변수
         }
         else if (isFPV == true)
         {
@@ -60,7 +64,8 @@ public class RoomUI : UIManager
             cam_TEXT.text = string.Format("FPV");
             cam_BTN.image.sprite = toggle_RIGHT;
             isFPV = false;
-            Debug.Log(isFPV);
+            // 3인칭이 아닐 경우 시점을 1인칭으로 바꾸고 버튼에 대한 이미지를 변경
+            // isFPV : 카메라의 시점을 판단하는 bool형식 변수
         }
     }
 

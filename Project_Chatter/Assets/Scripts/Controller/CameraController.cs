@@ -27,13 +27,11 @@ public class CameraController : MonoBehaviourPun
 
     #region Private variable
     private RoomUI roomUI;
+    private PhotonView pv;
 
     [SerializeField] Camera firstCam;
     [SerializeField] Camera thirdCam;
-    private PhotonView pv;
-    //[SerializeField] Vector3 cam_offSet;
     #endregion
-
 
     #region LifeCycle
     private void Awake()
@@ -52,10 +50,12 @@ public class CameraController : MonoBehaviourPun
     private void Start()
     {
         if (!pv.IsMine)
+        // 자신의 캐릭터가 아닐 경우 작동하지 않도록 처리
         {
             return;
         }
         else if (pv.IsMine)
+        // 자신의 캐릭터일 경우 초기 시점이 3인칭(TPV)로 초기화
         {
             SetCamera_Third();
         }
@@ -64,16 +64,16 @@ public class CameraController : MonoBehaviourPun
     private void Update()
     {
         this.gameObject.transform.position = cam_target.position;
+        // 캐릭터의 움직임에 따라 카메라의 위치가 따라가도록 처리
     }
     #endregion
+
     #region Public Method
-    
     /// <summary>
     /// FPV 카메라 연결
     /// </summary>
     public void SetCamera_First()
     {
-        //this.gameObject.transform.position = GameObject.FindWithTag("FirstCam").transform.position;
         firstCam.enabled = true;
         thirdCam.enabled = false;
     }
@@ -82,10 +82,8 @@ public class CameraController : MonoBehaviourPun
     /// </summary>
     public void SetCamera_Third()
     {
-        //this.gameObject.transform.position = GameObject.FindWithTag("MainCamera").transform.position;
         thirdCam.enabled = true;
         firstCam.enabled = false;
     }
-    
     #endregion
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 using Photon.Realtime;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -43,8 +42,6 @@ public class LobbyManager : ServerManager
         }
     }
     #endregion
-
-
 
     #region Public Method
     public void CreateInit(float slider_value)
@@ -92,43 +89,12 @@ public class LobbyManager : ServerManager
         }
     }
 
+    /// <summary>
+    /// 방을 랜덤으로 참가하도록 하는 메서드 처리
+    /// </summary>
     public void Quick_JoinRoom()
     {
         PhotonNetwork.JoinRandomRoom();
-        /*
-        string room_name = roomName;
-        string nick_name = nickName; if (string.IsNullOrEmpty(roomName) || string.IsNullOrEmpty(nickName))
-        {
-            return;
-        }
-
-        if (string.IsNullOrEmpty(room_name) || string.IsNullOrEmpty(nick_name))
-        {
-            roomName = "";
-            nickName = "";
-        }
-        else
-        {
-            roomName = "";
-            nickName = "";
-
-            Hashtable roomHT = new Hashtable();
-            roomHT.Add("RoomName", room_name);
-            string[] roomList = new string[1];
-            roomList[0] = "RoomName";
-
-            RoomOptions roomOp = new RoomOptions();
-            roomOp.MaxPlayers = (byte)player;
-            roomOp.CustomRoomProperties = roomHT;
-            roomOp.CustomRoomPropertiesForLobby = roomList;
-            //PhotonNetwork.JoinRandomOrCreateRoom(null, null, null, null, null, room_name, roomOp, null); ;
-            PhotonNetwork.JoinRandomOrCreateRoom(null, 0, MatchmakingMode.FillRoom, null, null, room_name, roomOp, null);
-
-
-            Debug.Log(room_name + "방 생성");
-            AppManager.Instance.ChangeScene(AppManager.eSceneState.Room);
-        }
-        */
     }
 
     /// <summary>
@@ -152,6 +118,10 @@ public class LobbyManager : ServerManager
         Debug.Log("로비 접속 완료!");
     }
 
+    /// <summary>
+    /// 생성된 방을 리스트화 처리
+    /// </summary>
+    /// <param name="roomList"></param>
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach(Transform tr in listContent_TR)
@@ -173,9 +143,11 @@ public class LobbyManager : ServerManager
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         lobbyUI.Open_QuickStatePopUp();
-        //lobbyUI.createRoom_PopUp.SetActive(true);
     }
 
-    #endregion
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
 
+    }
+    #endregion
 }
