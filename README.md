@@ -9,9 +9,6 @@ Photon &amp; Unity Project
  - 사용언어 : C#
  - 서버 : Photon 서버
 
-티스토리 링크 :
-https://hori-portfolio.tistory.com/category/Portfolio/Project_Chatter
-
 채팅기능
  - PhotonChat을 사용하여 채팅기능 구현
 
